@@ -1,0 +1,241 @@
+[
+    {
+        "id": "2c050f193880aabd",
+        "type": "mqtt in",
+        "z": "ab34d38c1e920b83",
+        "name": "",
+        "topic": "bpm",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 510,
+        "y": 640,
+        "wires": [
+            [
+                "88053fcaa8e837c2"
+            ]
+        ]
+    },
+    {
+        "id": "17668590982d27ad",
+        "type": "websocket out",
+        "z": "ab34d38c1e920b83",
+        "name": "",
+        "server": "ed24d5403e392ba1",
+        "client": "",
+        "x": 1090,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "86aa72773d2d33c3",
+        "type": "mqtt in",
+        "z": "ab34d38c1e920b83",
+        "name": "",
+        "topic": "sp02",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 510,
+        "y": 740,
+        "wires": [
+            [
+                "88053fcaa8e837c2"
+            ]
+        ]
+    },
+    {
+        "id": "73118207c3a3e0e2",
+        "type": "mqtt in",
+        "z": "ab34d38c1e920b83",
+        "name": "",
+        "topic": "temperature",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 530,
+        "y": 860,
+        "wires": [
+            [
+                "88053fcaa8e837c2"
+            ]
+        ]
+    },
+    {
+        "id": "88053fcaa8e837c2",
+        "type": "function",
+        "z": "ab34d38c1e920b83",
+        "name": "combineData",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 740,
+        "wires": [
+            [
+                "17668590982d27ad"
+            ]
+        ]
+    },
+    {
+        "id": "8fa0029e532423c8",
+        "type": "websocket in",
+        "z": "ab34d38c1e920b83",
+        "name": "",
+        "server": "1cb6cc2b4f2b9a58",
+        "client": "",
+        "x": 540,
+        "y": 500,
+        "wires": [
+            [
+                "7d19617c7ab8fba9"
+            ]
+        ]
+    },
+    {
+        "id": "31c0c71222b44098",
+        "type": "websocket out",
+        "z": "ab34d38c1e920b83",
+        "name": "",
+        "server": "1a6886c139c23a6a",
+        "client": "",
+        "x": 1100,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "1b2c97a482092fe3",
+        "type": "mqtt in",
+        "z": "ab34d38c1e920b83",
+        "name": "",
+        "topic": "login",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 510,
+        "y": 200,
+        "wires": [
+            [
+                "2db1dc5ebe6b779e"
+            ]
+        ]
+    },
+    {
+        "id": "2db1dc5ebe6b779e",
+        "type": "function",
+        "z": "ab34d38c1e920b83",
+        "name": "allowUsers",
+        "func": "// sendLogin\nconst whiteList = [988822938];\nlet isLogged = false;\n\nif (msg.payload && whiteList.includes(Number(msg.payload))) {\n    isLogged = true;\n}\n\ncontext.global.set('login', isLogged);\n\nif (isLogged) {\n    msg.payload = { login: true };\n    return msg;\n}\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3b12e74cd984b7d0",
+        "type": "mqtt in",
+        "z": "ab34d38c1e920b83",
+        "name": "",
+        "topic": "angle",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 510,
+        "y": 320,
+        "wires": [
+            [
+                "46db9f76b68d2f33"
+            ]
+        ]
+    },
+    {
+        "id": "46db9f76b68d2f33",
+        "type": "function",
+        "z": "ab34d38c1e920b83",
+        "name": "convertAngleData",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 320,
+        "wires": [
+            [
+                "31c0c71222b44098"
+            ]
+        ]
+    },
+    {
+        "id": "7d19617c7ab8fba9",
+        "type": "function",
+        "z": "ab34d38c1e920b83",
+        "name": "convertSpeedData",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 500,
+        "wires": [
+            [
+                "88053fcaa8e837c2",
+                "31c0c71222b44098"
+            ]
+        ]
+    },
+    {
+        "id": "ed24d5403e392ba1",
+        "type": "websocket-listener",
+        "path": "/ws/dashboard",
+        "wholemsg": "false"
+    },
+    {
+        "id": "1cb6cc2b4f2b9a58",
+        "type": "websocket-listener",
+        "path": "/ws/speed",
+        "wholemsg": "false"
+    },
+    {
+        "id": "1a6886c139c23a6a",
+        "type": "websocket-listener",
+        "path": "/ws/game",
+        "wholemsg": "false"
+    }
+]
